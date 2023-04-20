@@ -1,0 +1,13 @@
+Here is are some SQL queries with a basic filters:
+
+SELECT film_id, title, description
+FROM film
+WHERE title LIKE '%Uptown%'
+
+---------------------------------------
+
+SELECT film_id, title, description
+FROM film
+WHERE rental_duration 
+BETWEEN 3 AND 7
+AND NOT rental_duration IN (3, 7)
