@@ -20,3 +20,9 @@ The data used contained information about Rockbuster's film inventory, customers
 
 ## Code
 The example of code used for this analysis can be found in this respostory as well as the Final Report for this project. 
+
+## Deliverables
+- [Project Brief](https://github.com/JanayaBrown/Rockbuster-Virutal-Streaming-Market-Analysis/blob/main/A3_Data_Project_Brief%20.pdf)
+- [Data Dictionary](https://github.com/JanayaBrown/Rockbuster-Virutal-Streaming-Market-Analysis/blob/main/Ach_3_data_dictionary.pdf)
+- [Powerpoint Report](https://github.com/JanayaBrown/Rockbuster-Virutal-Streaming-Market-Analysis/blob/main/Achievement%203.pptx)
+- [Excel Report](https://github.com/JanayaBrown/Rockbuster-Virutal-Streaming-Market-Analysis/blob/main/Achievement%203.xlsx)
