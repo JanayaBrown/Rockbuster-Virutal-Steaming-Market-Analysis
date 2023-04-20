@@ -1,40 +1,48 @@
-The follwoing q
+The following queries used a CTE (Common Table Expression) to find the average amount spent by the top 5 highest paying customers in the top 10 cities in the top 10 countries with the highest number of customers. 
 
-
-SELECT AVG(total_amount_paid) AS average
-FROM ( 
-  SELECT SUM(A.amount) AS total_amount_paid
-  FROM payment A
-  INNER JOIN customer B ON A.customer_id = B.customer_id
-  INNER JOIN address C ON C.addess_id = B.address_id
-  INNER JOIN city D ON C.city_id = D.city_id
-  INNER JOIN country E ON D.country_id = E.country_id
-  WHERE E.country IN ('India',
-    'China',
-    'United States',
-    'Japan',
-    'Mexico',
-    'Brazil',
-    'Russian Federation',
-    'Philippines',
-    'Turkey',
-    'Indonesia')
-      AND
-     D.city IN ('Aurora',
-      'Acua',
-      'Citris Hieghts',
-      'Iwaki',
-      'Ambattur',
-      'Shanwei',
-      'So Leopaldo',
-      'Teboksary',
-      'Tainjin',
-      'Cainjur')
+/* creating the cte
+WITH top_5_customers_cte (customer_id, first_name, last_name, country, city, total_amount_paid) AS
+    (SELECT B.customer_id,
+        B.first_name,
+        B.last_name,
+        E.country,
+        D.city,
+        SUM(A.amount) AS total_amount_paid
+     FROM payment A
+     INNER JOIN customer B ON A.customer_id = B.customer_id
+     INNER JOIN address C ON C.addess_id = B.address_id
+     INNER JOIN city D ON C.city_id = D.city_id
+     INNER JOIN country E ON D.country_id = E.country_id  
+     WHERE E.country IN ('India',
+        'China',
+        'United States',
+        'Japan',
+        'Mexico',
+        'Brazil',
+        'Russian Federation',
+        'Philippines',
+        'Turkey',
+        'Indonesia')
+     AND
+         D.city IN ('Aurora',
+         'Acua',
+         'Citris Hieghts',
+         'Iwaki',
+         'Ambattur',
+         'Shanwei',
+         'So Leopaldo',
+         'Teboksary',
+         'Tainjin',
+         'Cainjur')
      GROUP BY B.customer_id,
-      B.first_name,
-      B.last_name,
-      E.country,
-      D.city
+          B.first_name,
+          B.last_name,
+          E.country,
+          D.city
      ORDER BY total_amount_paid DESC
      LIMIT 5) 
-  AS top_5_customers 
+        
+
+/* main query */
+SELECT AVG(total_amount_paid) AS average
+FROM top_5_customers_cte
