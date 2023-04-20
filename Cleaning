@@ -1,0 +1,95 @@
+The following queries are to for cleaning databases. They cover checking for and rectifying duplicate, non-uniform, and missing data.
+
+
+### Duplicate Data
+/* checking for duplicated in the film table */ 
+SELECT title,
+       release_year,
+       language_id,
+       rental_duration,
+       COUNT(*)
+FROM film
+GROUP BY title,
+         release_year,
+         language_id,
+         rental_duration
+HAVING COUNT(*) >1;
+
+
+
+/* template to create a view with unique values */
+CREATE VIEW film_view AS
+SELECT film_id, 
+       title,
+       release_year,
+       language_id,
+       rental_duration
+FROM film
+GROUP BY film_id, 
+       title,
+       release_year,
+       language_id,
+       rental_duration
+
+
+
+/* template to delete duplicate records */
+DELETE
+FROM film
+WHERE film_id NOT IN
+    (SELECT MIN(film_id)
+     FROM film_view
+     GROUP BY film_id, 
+       title,
+       release_year,
+       language_id,
+       rental_duration
+
+
+
+### Non-uniform Data
+/* checking for non_uniform data in the customer tab;e */ 
+SELECT DISTINCT column_name
+FROM customer
+
+/* Replacing “column_name” with the column in question and adding */
+
+WHERE email NOT LIKE ‘%@% 
+OR email NOT LIKE ‘%.%’ 
+/* to check for proper formatting for the email */ 
+
+
+
+/* template to correct non-uniform data */
+UPDATE customer
+SET rating = 'desired_format'
+WHERE rating IN (‘incorect_format’,
+                 ‘incorect_format’,
+                 ‘incorect_format’)
+
+
+
+### Missing Data 
+/* checking for missing data in the film table */ 
+SELECT COUNT(*) AS num_rows,
+	COUNT(film_id) AS num_film_id,
+	COUNT(title) AS num_title,
+	COUNT(description) AS num_description,
+	COUNT(release_year) AS num_release_yr,
+	COUNT(language_id) AS num_lan_id,
+	COUNT(rental_duration) AS num_rent_dur,
+	COUNT(rental_rate) AS num_rent_rate,
+	COUNT(length) AS num_lenth,
+	COUNT(replacement_cost) AS num_replace_cost,
+	COUNT(rating) AS num_rating,
+	COUNT(last_update) AS num_update,
+	COUNT(special_features) AS num_spec_ft,
+	COUNT(fulltext) AS num_fulltxt
+FROM film
+
+/* There were no missing values in this table. If less than 5% of the values of any column were missing, I would have imputed average or mode values into the blanks. If more than 5% of the datapoints were missing from any given columns, I would have excluded the columns from analyses. */
+
+
+
+
+
